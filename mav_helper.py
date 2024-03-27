@@ -3,7 +3,6 @@ import logging
 from mariadb_helper import MariaDBHelper
 import sys
 import requests
-sys.set_int_max_str_digits(0)
 
 MariaDBHelper = MariaDBHelper()
 
