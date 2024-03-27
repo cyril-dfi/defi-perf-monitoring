@@ -48,21 +48,20 @@ class MySQLHelper():
                     cursor.execute(f"CREATE DATABASE `{self.db_name}`;")
                     logging.info(f"Database '{self.db_name}' created successfully.")
         except Error as e:
-            print(f"Error: {e}")
+            logging.error(f"Error: {e}")
         finally:
             # Close the connection
             if connection.is_connected():
                 cursor.close()
                 connection.close()
-                print("MySQL connection is closed")
+                logging.info("MySQL connection is closed")
 
     def execute_query(self, query):
         try:
             self.cursor.execute(query)
             self.connection.commit()
-            logging.info("Query executed successfully")
         except Error as e:
-            logging.error(f"The error '{e}' occurred")
+            logging.error(f"The error '{e}' occurred with query {query}")
 
 
     def create_if_not_exists(self, sql_without_semi_colon):
@@ -83,7 +82,6 @@ class MySQLHelper():
             logging.error(query)
 
     def get_app_network_id(self, network, app):
-        logging.info(f"Getting the 'app_network_id' for {network} - {app}")
         get_app_network_id_query = f"""
             SELECT `app_network`.`id`
             FROM `app_network`
