@@ -1,11 +1,11 @@
 from config import *
 import logging
-from mysql_helper import MySQLHelper
+from mariadb_helper import MariaDBHelper
 import sys
 import requests
 sys.set_int_max_str_digits(0)
 
-MySQLHelper = MySQLHelper()
+MariaDBHelper = MariaDBHelper()
 
 class MavHelper():
      def __init__(self):
@@ -20,7 +20,7 @@ class MavHelper():
                     {'address': pool["tokenA"]["address"], 'symbol': pool["tokenA"]["symbol"]},
                     {'address': pool["tokenB"]["address"], 'symbol': pool["tokenB"]["symbol"]},
                ]
-               MySQLHelper.insert_pool(pool_data, pool_token_data, network, app)
+               MariaDBHelper.insert_pool(pool_data, pool_token_data, network, app)
 
 
      def get_latest_data(self, owner_address, network, app):
@@ -42,4 +42,4 @@ class MavHelper():
                               position["pool"]["tokenB"]["address"]: position["reserveB"],
                          }
                     }
-                    MySQLHelper.insert_position(owner_address, position_data, network, app)
+                    MariaDBHelper.insert_position(owner_address, position_data, network, app)

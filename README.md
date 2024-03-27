@@ -5,6 +5,7 @@ DOC IN PROGRESS
 
 
 # Prerequisites
+- MariaDB is installed on your machine
 
 
 # Installation
@@ -15,6 +16,12 @@ Follow these steps to install:
 
 - Install required Python packages:
 ```pip install -r requirements.txt```
+
+- Create a .env file in the root of the folder with:
+```MARIADB_PASSWORD='your_password'
+MARIADB_USER_NAME='your_user_name'
+MARIADB_HOST_NAME='your_host_name'
+ADDRESSES='0xADDRESS1,OxADDRESS2'```
 
 
 # Usage

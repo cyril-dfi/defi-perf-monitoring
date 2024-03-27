@@ -1,66 +1,63 @@
-import mysql.connector
-from mysql.connector import Error
+import mariadb
 from config import os, logging
 
-class MySQLHelper():
+class MariaDBHelper():
     def __init__(self):
         # Database connection details
         self.db_name = "defi-perf-monitoring"
-        self.host_name = os.environ.get('MYSQL_HOST_NAME')
-        self.user_name = os.environ.get('MYSQL_USER_NAME')
-        self.user_password = os.environ.get('MYSQL_PASSWORD')
+        self.host_name = os.environ.get('MARIADB_HOST_NAME')
+        self.user_name = os.environ.get('MARIADB_USER_NAME')
+        self.user_password = os.environ.get('MARIADB_PASSWORD')
 
         self.create_db_if_not_exists()
 
         # Connect to the database
         self.connection = None
         try:
-            self.connection = mysql.connector.connect(
+            self.connection = mariadb.connect(
                 host=self.host_name,
                 user=self.user_name,
                 passwd=self.user_password,
                 database=self.db_name
             )
-            logging.info("Connection to MySQL DB successful")
-        except Error as e:
+            logging.info("Connection to MariaDB successful")
+        except mariadb.Error as e:
             logging.error(f"The error '{e}' occurred")
         
         self.cursor = self.connection.cursor()
 
     def create_db_if_not_exists(self):
         try:
-            # Connect to the MySQL server
-            connection = mysql.connector.connect(
+            # Connect to the MariaDB server
+            connection = mariadb.connect(
                 host=self.host_name,
                 user=self.user_name,
                 passwd=self.user_password
             )
             
-            if connection.is_connected():
-                cursor = connection.cursor()
-                # Check if the database exists
-                cursor.execute(f"SHOW DATABASES LIKE '{self.db_name}';")
-                result = cursor.fetchone()
-                if result:
-                    logging.info(f"Database '{self.db_name}' already exists.")
-                else:
-                    # Create the database if it does not exist
-                    cursor.execute(f"CREATE DATABASE `{self.db_name}`;")
-                    logging.info(f"Database '{self.db_name}' created successfully.")
-        except Error as e:
+            cursor = connection.cursor()
+            # Check if the database exists
+            cursor.execute(f"SHOW DATABASES LIKE '{self.db_name}';")
+            result = cursor.fetchone()
+            if result:
+                logging.info(f"Database '{self.db_name}' already exists.")
+            else:
+                # Create the database if it does not exist
+                cursor.execute(f"CREATE DATABASE `{self.db_name}`;")
+                logging.info(f"Database '{self.db_name}' created successfully.")
+        except mariadb.Error as e:
             logging.error(f"Error: {e}")
         finally:
             # Close the connection
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-                logging.info("MySQL connection is closed")
+            cursor.close()
+            connection.close()
+            logging.info("MariaDB connection is closed")
 
     def execute_query(self, query):
         try:
             self.cursor.execute(query)
             self.connection.commit()
-        except Error as e:
+        except mariadb.Error as e:
             logging.error(f"The error '{e}' occurred with query {query}")
 
 

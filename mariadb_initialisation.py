@@ -1,8 +1,8 @@
-from mysql_helper import *
+from mariadb_helper import *
 
-MySQLHelper = MySQLHelper()
+MariaDBHelper = MariaDBHelper()
 
-logging.info("Creating 'network' MySQL table")
+logging.info("Creating 'network' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS network (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS network (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'app' MySQL table")
+logging.info("Creating 'app' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS app (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS app (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'app_network' MySQL table")
+logging.info("Creating 'app_network' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS app_network (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS app_network (
   UNIQUE (app_id, network_id) 
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
 logging.info("Initialising maverick on ethereum")
@@ -51,27 +51,27 @@ supported_apps_and_networks = {
 }
 
 for app in supported_apps_and_networks:
-    app_id = MySQLHelper.insert_in_table(
+    app_id = MariaDBHelper.insert_in_table(
           'app', 
           ['name'],
           [app],
       )
 
     for network in supported_apps_and_networks[app]:
-        network_id = MySQLHelper.insert_in_table(
+        network_id = MariaDBHelper.insert_in_table(
           'network', 
           ['name'],
           [network['network']],
         )
 
-        MySQLHelper.insert_in_table(
+        MariaDBHelper.insert_in_table(
           'app_network', 
           ['app_id', 'network_id', 'position_contract_address'],
           [app_id, network_id, network['position_contract_address']],
         )
 
 
-logging.info("Creating 'pool' MySQL table")
+logging.info("Creating 'pool' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS pool (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -82,10 +82,10 @@ CREATE TABLE IF NOT EXISTS pool (
   FOREIGN KEY (app_network_id) REFERENCES app_network(id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'token' MySQL table")
+logging.info("Creating 'token' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS token (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -94,10 +94,10 @@ CREATE TABLE IF NOT EXISTS token (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'token_price_history' MySQL table")
+logging.info("Creating 'token_price_history' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS token_price_history (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS token_price_history (
   FOREIGN KEY (token_id) REFERENCES token(id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'pool_token' MySQL table")
+logging.info("Creating 'pool_token' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS pool_token (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -122,10 +122,10 @@ CREATE TABLE IF NOT EXISTS pool_token (
   UNIQUE (pool_id, token_id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'position' MySQL table")
+logging.info("Creating 'position' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS position (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -138,10 +138,10 @@ CREATE TABLE IF NOT EXISTS position (
   UNIQUE (owner_address, pool_id) -- For now, we don't handle the case when on user has multiple positions on the same pool
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'position_token' MySQL table")
+logging.info("Creating 'position_token' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS position_token (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -154,10 +154,10 @@ CREATE TABLE IF NOT EXISTS position_token (
   UNIQUE (position_id, token_id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'position_token_history' MySQL table")
+logging.info("Creating 'position_token_history' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS position_token_history (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -169,10 +169,10 @@ CREATE TABLE IF NOT EXISTS position_token_history (
   FOREIGN KEY (token_id) REFERENCES token(id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Creating 'position_balance_history' MySQL table")
+logging.info("Creating 'position_balance_history' table")
 create_table_query = """
 CREATE TABLE IF NOT EXISTS position_balance_history (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,4 +182,4 @@ CREATE TABLE IF NOT EXISTS position_balance_history (
   FOREIGN KEY (position_id) REFERENCES `position`(id)
 ) ENGINE=InnoDB
 """
-MySQLHelper.execute_query(create_table_query)
+MariaDBHelper.execute_query(create_table_query)
