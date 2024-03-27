@@ -12,7 +12,7 @@ DOC IN PROGRESS
 Follow these steps to install:
 
 - Clone the repository:
-```git clone git@github.com:cyril-dfi/defi-perf-monitoring.git```
+```git clone https://github.com/cyril-dfi/defi-perf-monitoring.git```
 
 - CD to the repository
 ```cd defi-perf-monitoring```
