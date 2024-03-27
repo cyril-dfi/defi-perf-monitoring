@@ -134,7 +134,8 @@ CREATE TABLE IF NOT EXISTS position (
   nft_id INT,
   initial_balance DECIMAL(20,10),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (pool_id) REFERENCES pool(id)
+  FOREIGN KEY (pool_id) REFERENCES pool(id),
+  UNIQUE (owner_address, pool_id) -- For now, we don't handle the case when on user has multiple positions on the same pool
 ) ENGINE=InnoDB
 """
 MySQLHelper.execute_query(create_table_query)
