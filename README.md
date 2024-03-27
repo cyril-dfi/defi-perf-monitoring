@@ -20,7 +20,7 @@ Follow these steps to install:
 - Install required Python packages:
 ```pip install -r requirements.txt```
 
-- Create a ```.env``` file in the root of the folder. Replace each line with the relevant values. In "ADDRESSES" paste the list of ETH addresses you want to track separated by Commas.
+- Create a ```.env``` file in the root of the folder. Replace each line with the relevant values. In ```ADDRESSES``` paste the list of ETH addresses you want to track separated by Commas.
 ```
 MARIADB_PASSWORD='your_password'
 MARIADB_USER_NAME='your_user_name'
