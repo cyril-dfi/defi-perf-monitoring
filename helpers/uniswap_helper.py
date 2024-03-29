@@ -1,7 +1,7 @@
 from config import *
 import logging
-from mariadb_helper import MariaDBHelper
-from thegraph_helper import TheGraphHelper
+from helpers.mariadb_helper import MariaDBHelper
+from helpers.thegraph_helper import TheGraphHelper
 import sys
 import time
 import requests

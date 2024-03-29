@@ -1,6 +1,6 @@
 from config import *
-from mav_helper import *
-from uniswap_helper import *
+from helpers.mav_helper import *
+from helpers.uniswap_helper import *
 
 MavHelper = MavHelper()
 UniswapHelper = UniswapHelper()

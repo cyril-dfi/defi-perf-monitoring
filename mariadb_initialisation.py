@@ -1,4 +1,4 @@
-from mariadb_helper import *
+from helpers.mariadb_helper import *
 
 MariaDBHelper = MariaDBHelper()
 

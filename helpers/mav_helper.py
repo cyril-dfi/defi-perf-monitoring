@@ -1,6 +1,6 @@
 from config import *
 import logging
-from mariadb_helper import MariaDBHelper
+from helpers.mariadb_helper import MariaDBHelper
 import sys
 import requests
 
