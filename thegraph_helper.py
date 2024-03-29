@@ -4,7 +4,8 @@ import json
 
 class TheGraphHelper():
     def __init__(self):
-        self.api_url = THEGRAPH_URLS[argument.app][argument.network]
+        if argument.app == 'uniswapv3':
+            self.api_url = THEGRAPH_URLS[argument.app][argument.network]
 
     def get_data(self, query):
         r = requests.post(self.api_url, json={'query': query})

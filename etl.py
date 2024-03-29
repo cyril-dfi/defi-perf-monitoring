@@ -8,7 +8,6 @@ UniswapHelper = UniswapHelper()
 def main():
     if argument.app == 'maverick':
         MavHelper.get_pools()
-
         for owner_address in ADDRESSES:
             MavHelper.get_latest_data(owner_address)
     elif argument.app == 'uniswapv3':
