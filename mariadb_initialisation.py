@@ -40,15 +40,21 @@ CREATE TABLE IF NOT EXISTS app_network (
 MariaDBHelper.execute_query(create_table_query)
 
 
-logging.info("Initialising maverick on ethereum")
+logging.info("Initialising maverick and uniswapv3")
 supported_apps_and_networks = {
     'maverick': [
         {'network': 'ethereum', 'position_contract_address': '0x4A3e49f77a2A5b60682a2D6B8899C7c5211EB646'},
         {'network': 'bnb', 'position_contract_address': '0x23Aeaf001E5DF9d7410EE6C6916f502b7aC8e9D0'},
         {'network': 'zksync', 'position_contract_address': '0xFd54762D435A490405DDa0fBc92b7168934e8525'},
         {'network': 'base', 'position_contract_address': '0x0d8127A01bdb311378Ed32F5b81690DD917dBa35'},
+    ],
+    'uniswapv3': [
+        {'network': 'ethereum', 'position_contract_address': '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'},
+        {'network': 'bnb', 'position_contract_address': '0x7b8A01B39D58278b5DE7e48c8449c9f4F5170613'},
+        {'network': 'base', 'position_contract_address': '0x03a520b32C04BF3bEEf7BEb72E919cf822Ed34f1'},
     ]
 }
+
 
 for app in supported_apps_and_networks:
     app_id = MariaDBHelper.insert_in_table(

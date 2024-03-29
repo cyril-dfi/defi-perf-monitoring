@@ -45,6 +45,10 @@ class MariaDBHelper():
                 # Create the database if it does not exist
                 cursor.execute(f"CREATE DATABASE `{self.db_name}`;")
                 logging.info(f"Database '{self.db_name}' created successfully.")
+                # Initialize using UTF-8
+                cursor.execute(f"ALTER DATABASE `{self.db_name}` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;")
+
+
         except mariadb.Error as e:
             logging.error(f"Error: {e}")
         finally:

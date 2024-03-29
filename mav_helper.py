@@ -10,7 +10,7 @@ class MavHelper():
      def __init__(self):
           self.chain_id = MAV_CHAIN_ID[argument.network]
 
-     def get_pools(self, network, app):
+     def get_pools(self):
           pool_api_url = f"https://api.mav.xyz/api/v4/pools/{self.chain_id}"
           pool_api_url_data = requests.get(pool_api_url).json()
           for pool in pool_api_url_data['pools']:
@@ -19,10 +19,10 @@ class MavHelper():
                     {'address': pool["tokenA"]["address"], 'symbol': pool["tokenA"]["symbol"]},
                     {'address': pool["tokenB"]["address"], 'symbol': pool["tokenB"]["symbol"]},
                ]
-               MariaDBHelper.insert_pool(pool_data, pool_token_data, network, app)
+               MariaDBHelper.insert_pool(pool_data, pool_token_data, argument.network, argument.app)
 
 
-     def get_latest_data(self, owner_address, network, app):
+     def get_latest_data(self, owner_address):
           user_api_url = f"https://api.mav.xyz/api/v4/user/{owner_address}/{self.chain_id}"
           logging.info(f"Calling {user_api_url}")
           user_api_data = requests.get(user_api_url).json()
@@ -41,4 +41,4 @@ class MavHelper():
                               position["pool"]["tokenB"]["address"]: position["reserveB"],
                          }
                     }
-                    MariaDBHelper.insert_position(owner_address, position_data, network, app)
+                    MariaDBHelper.insert_position(owner_address, position_data, argument.network, argument.app)
